@@ -6,7 +6,7 @@ metadata:
     {{- include "kube-pilot.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.k8sPilotAgent.replicas }}
   {{- end }}
   selector:
     matchLabels:
