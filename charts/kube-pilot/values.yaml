@@ -1,6 +1,36 @@
-k8sPilotAgent:
-  replicas: 1
+# -- Provide a name in place of `kube-pilot`
+nameOverride: kube-pilot
 
+global:
+  image:
+    tag: "v0.0.1"
+    imagePullPolicy: Always
+
+  # -- Secrets with credentials to pull images from a private registry
+  imagePullSecrets: []
+
+k8sPilotAgent:
+  image:
+    repository: kubepilot/k8s-pilot-agent
+    tag: "v0.0.1"
+    imagePullPolicy: Always
+  replicas: 1
+  containerPorts:
+    server: 8080
+  terminationGracePeriodSeconds: 30
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 3
+  readinessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 3
+  resources: {}
 replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/

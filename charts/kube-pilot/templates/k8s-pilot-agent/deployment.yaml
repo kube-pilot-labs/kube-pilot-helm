@@ -1,78 +1,63 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "kube-pilot.fullname" . }}
+  name: {{ include "kube-pilot.k8sPilotAgent.fullname" . }}
+  namespace: {{ include  "kube-pilot.namespace" . }}
   labels:
     {{- include "kube-pilot.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.k8sPilotAgent.replicas }}
-  {{- end }}
   selector:
     matchLabels:
-      {{- include "kube-pilot.selectorLabels" . | nindent 6 }}
+      {{- include "kube-pilot.selectorLabels" (dict "context" . "name" .Values.k8sPilotAgent.name) | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "kube-pilot.labels" . | nindent 8 }}
-        {{- with .Values.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
+        {{- include "kube-pilot.labels" (dict "context" . "name" .Values.k8sPilotAgent.name) | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- with .Values.k8sPilotAgent.imagePullSecrets | default .Values.global.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "kube-pilot.serviceAccountName" . }}
-      {{- with .Values.podSecurityContext }}
-      securityContext:
-        {{- toYaml . | nindent 8 }}
+      {{- if .Values.k8sPilotAgent.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ .Values.k8sPilotAgent.terminationGracePeriodSeconds }}
       {{- end }}
+      serviceAccountName: {{ include "kube-pilot.k8sPilotAgent.serviceAccountName" . }}
+      automountServiceAccountToken: {{ .Values.k8sPilotAgent.automountServiceAccountToken }}
       containers:
-        - name: {{ .Chart.Name }}
-          {{- with .Values.securityContext }}
+        - name: {{ .Values.k8sPilotAgent.name }}
+          {{- with .Values.k8sPilotAgent.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: {{ default .Values.global.image.repository .Values.k8sPilotAgent.image.repository }}:{{ default (include "kube-pilot.defaultTag" .) .Values.k8sPilotAgent.image.tag }}
+          imagePullPolicy: {{ default .Values.global.image.imagePullPolicy .Values.k8sPilotAgent.image.imagePullPolicy }}
           ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
+            - name: server
+              containerPort: {{ .Values.k8sPilotAgent.containerPorts.server }}
               protocol: TCP
-          {{- with .Values.livenessProbe }}
           livenessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.readinessProbe }}
+            httpGet:
+              path: /healthz
+              port: server
+              initialDelaySeconds: {{ .Values.k8sPilotAgent.livenessProbe.initialDelaySeconds }}
+              periodSeconds: {{ .Values.k8sPilotAgent.livenessProbe.periodSeconds }}
+              timeoutSeconds: {{ .Values.k8sPilotAgent.livenessProbe.timeoutSeconds }}
+              successThreshold: {{ .Values.k8sPilotAgent.livenessProbe.successThreshold }}
+              failureThreshold: {{ .Values.k8sPilotAgent.livenessProbe.failureThreshold }}
           readinessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.resources }}
+            httpGet:
+              path: /healthz
+              port: server
+              initialDelaySeconds: {{ .Values.k8sPilotAgent.readinessProbe.initialDelaySeconds }}
+              periodSeconds: {{ .Values.k8sPilotAgent.readinessProbe.periodSeconds }}
+              timeoutSeconds: {{ .Values.k8sPilotAgent.readinessProbe.timeoutSeconds }}
+              successThreshold: {{ .Values.k8sPilotAgent.readinessProbe.successThreshold }}
+              failureThreshold: {{ .Values.k8sPilotAgent.readinessProbe.failureThreshold }}
           resources:
-            {{- toYaml . | nindent 12 }}
+            {{- toYaml .Values.k8sPilotAgent.resources | nindent 10 }}
+          {{- with .Values.k8sPilotAgent.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 10 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
-      volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+          {{- with .Values.k8sPilotAgent.volumeMounts }}

@@ -1,9 +1,7 @@
-{{/*
-Expand the name of the chart.
-*/}}
-{{- define "kube-pilot.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
-{{- end }}
+
+{{- define "kube-pilot.k8sPilotAgent.fullname" -}}
+{{- printf "%s-%s" (include "kube-pilot.fullname" .) .Values.k8sPilotAgent.name | trunc 52 | trimSuffix "-" -}}
+{{- end -}}
 
 {{/*
 Create a default fully qualified app name.
@@ -24,30 +22,11 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
-Create chart name and version as used by the chart label.
+Expand the namespace of the release.
+Allows overriding it for multi-namespace deployments in combined charts.
 */}}
-{{- define "kube-pilot.chart" -}}
-{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
-{{- end }}
-
-{{/*
-Common labels
-*/}}
-{{- define "kube-pilot.labels" -}}
-helm.sh/chart: {{ include "kube-pilot.chart" . }}
-{{ include "kube-pilot.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end }}
-
-{{/*
-Selector labels
-*/}}
-{{- define "kube-pilot.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "kube-pilot.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+{{- define "kube-pilot.namespace" -}}
+{{- default .Release.Namespace .Values.namespaceOverride | trunc 63 | trimSuffix "-" -}}
 {{- end }}
 
 {{/*
