@@ -1,15 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "kube-pilot.fullname" . }}
+  name: {{ template "kube-pilot.k8sPilotAgent.fullname" . }}
+  namespace: {{ include  "kube-pilot.namespace" . }}
   labels:
-    {{- include "kube-pilot.labels" . | nindent 4 }}
+    {{- include "kube-pilot.labels" (dict "context" . "name" .Values.k8sPilotAgent.name) | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.k8sPilotAgent.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+  - name: {{ .Values.k8sPilotAgent.service.servicePortHttpName }}
+    protocol: TCP
+    port: {{ .Values.k8sPilotAgent.service.servicePortHttp }}
+    targetPort: {{ .Values.k8sPilotAgent.containerPorts.server }}
   selector:
-    {{- include "kube-pilot.selectorLabels" . | nindent 4 }}
+    {{- include "kube-pilot.selectorLabels" (dict "context" . "name" .Values.k8sPilotAgent.name) | nindent 4 }}

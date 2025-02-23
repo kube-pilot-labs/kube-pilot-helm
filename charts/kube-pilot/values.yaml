@@ -31,7 +31,10 @@ k8sPilotAgent:
     successThreshold: 1
     failureThreshold: 3
   resources: {}
-replicaCount: 1
+  service:
+    type: ClusterIP
+    servicePortHttp: 8080
+    servicePortHttpName: http
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
