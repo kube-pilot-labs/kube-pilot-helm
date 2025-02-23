@@ -30,12 +30,12 @@ Allows overriding it for multi-namespace deployments in combined charts.
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+Create the name of the k8s-pilot-agent service account to use
 */}}
-{{- define "kube-pilot.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "kube-pilot.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
+{{- define "kube-pilot.k8sPilotAgent.serviceAccountName" -}}
+{{- if .Values.k8sPilotAgent.serviceAccount.create -}}
+    {{ default (include "kube-pilot.k8sPilotAgent.fullname" .) .Values.k8sPilotAgent.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.k8sPilotAgent.serviceAccount.name }}
+{{- end -}}
+{{- end -}}

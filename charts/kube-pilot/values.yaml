@@ -37,4 +37,5 @@ k8sPilotAgent:
     servicePortHttpName: http
   serviceAccount:
     name: k8s-pilot-agent
+    create: true
     automountServiceAccountToken: true

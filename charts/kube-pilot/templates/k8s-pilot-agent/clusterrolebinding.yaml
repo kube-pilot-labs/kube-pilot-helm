@@ -3,7 +3,7 @@ kind: ClusterRoleBinding
 metadata:
   name: {{ include "kube-pilot.k8sPilotAgent.fullname" . }}
   labels:
-    {{- include "kube-pilot.labels" (dict "context" . "component" .Values.server.name "name" .Values.server.name) | nindent 4 }}
+    {{- include "kube-pilot.labels" (dict "context" . "component" .Values.k8sPilotAgent.name "name" .Values.k8sPilotAgent.name) | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
