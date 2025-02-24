@@ -1,6 +1,9 @@
 # -- Provide a name in place of `kube-pilot`
 nameOverride: kube-pilot
 
+# -- String to fully override `"kube-pilot.fullname"`
+fullnameOverride: ""
+
 global:
   image:
     tag: "v0.0.1"
@@ -10,6 +13,7 @@ global:
   imagePullSecrets: []
 
 k8sPilotAgent:
+  name: k8s-pilot-agent
   image:
     repository: kubepilot/k8s-pilot-agent
     tag: "v0.0.1"
