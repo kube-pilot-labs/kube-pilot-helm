@@ -20,7 +20,7 @@ k8sPilotAgent:
     imagePullPolicy: Always
   replicas: 1
   containerPorts:
-    server: 8080
+    http: 8080
   terminationGracePeriodSeconds: 30
   livenessProbe:
     initialDelaySeconds: 10
@@ -37,8 +37,8 @@ k8sPilotAgent:
   resources: {}
   service:
     type: ClusterIP
-    servicePortHttp: 8080
-    servicePortHttpName: http
+    servicePort: 8080
+    servicePortName: http
   serviceAccount:
     name: k8s-pilot-agent
     create: true

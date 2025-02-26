@@ -8,9 +8,9 @@ metadata:
 spec:
   type: {{ .Values.k8sPilotAgent.service.type }}
   ports:
-  - name: {{ .Values.k8sPilotAgent.service.servicePortHttpName }}
+  - name: {{ .Values.k8sPilotAgent.service.servicePortName }}
     protocol: TCP
-    port: {{ .Values.k8sPilotAgent.service.servicePortHttp }}
-    targetPort: {{ .Values.k8sPilotAgent.containerPorts.server }}
+    port: {{ .Values.k8sPilotAgent.service.servicePort }}
+    targetPort: {{ .Values.k8sPilotAgent.containerPorts.http }}
   selector:
     {{- include "kube-pilot.selectorLabels" (dict "context" . "name" .Values.k8sPilotAgent.name) | nindent 4 }}

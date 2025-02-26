@@ -33,13 +33,13 @@ spec:
           image: {{ default .Values.global.image.repository .Values.k8sPilotAgent.image.repository }}:{{ default (include "kube-pilot.defaultTag" .) .Values.k8sPilotAgent.image.tag }}
           imagePullPolicy: {{ default .Values.global.image.imagePullPolicy .Values.k8sPilotAgent.image.imagePullPolicy }}
           ports:
-            - name: server
-              containerPort: {{ .Values.k8sPilotAgent.containerPorts.server }}
+            - name: http
+              containerPort: {{ .Values.k8sPilotAgent.containerPorts.http }}
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /healthz
-              port: server
+              port: http
               initialDelaySeconds: {{ .Values.k8sPilotAgent.livenessProbe.initialDelaySeconds }}
               periodSeconds: {{ .Values.k8sPilotAgent.livenessProbe.periodSeconds }}
               timeoutSeconds: {{ .Values.k8sPilotAgent.livenessProbe.timeoutSeconds }}
@@ -48,7 +48,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /healthz
-              port: server
+              port: http
               initialDelaySeconds: {{ .Values.k8sPilotAgent.readinessProbe.initialDelaySeconds }}
               periodSeconds: {{ .Values.k8sPilotAgent.readinessProbe.periodSeconds }}
               timeoutSeconds: {{ .Values.k8sPilotAgent.readinessProbe.timeoutSeconds }}
