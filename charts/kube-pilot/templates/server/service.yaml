@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "kube-pilot.server.fullname" . }}
+  namespace: {{ include  "kube-pilot.namespace" . }}
+  labels:
+    {{- include "kube-pilot.labels" (dict "context" . "name" .Values.server.name) | nindent 4 }}
+spec:
+  type: {{ .Values.server.service.type }}
+  ports:
+  - name: {{ .Values.server.service.servicePortName }}
+    protocol: TCP
+    port: {{ .Values.server.service.servicePort }}
+    targetPort: {{ .Values.server.containerPorts.http }}
+  selector:
+    {{- include "kube-pilot.selectorLabels" (dict "context" . "name" .Values.server.name) | nindent 4 }}
