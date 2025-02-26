@@ -1,0 +1,6 @@
+dependencies:
+- name: confluent-for-kubernetes
+  repository: https://packages.confluent.io/helm
+  version: 0.1193.1
+digest: sha256:de7da7cca6dfd24ecc68cb1e3a2fdb7ae02d04ebeef058e242138e9f54efda2c
+generated: "2025-02-27T01:05:01.543953+09:00"
