@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "resource-simulator.fullname" . }}
+  namespace: {{ include  "resource-simulator.namespace" . }}
+  labels:
+    {{- include "resource-simulator.labels" (dict "context" . "name" .Values.resourceSimulator.name) | nindent 4 }}
+spec:
+  replicas: {{ .Values.resourceSimulator.replicas }}
+  selector:
+    matchLabels:
+      {{- include "resource-simulator.selectorLabels" (dict "context" . "name" .Values.resourceSimulator.name) | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "resource-simulator.labels" (dict "context" . "name" .Values.resourceSimulator.name) | nindent 8 }}
+    spec:
+      {{- with .Values.resourceSimulator.imagePullSecrets | default .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.resourceSimulator.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ .Values.resourceSimulator.terminationGracePeriodSeconds }}
+      {{- end }}
+      containers:
+        - name: {{ .Values.resourceSimulator.name }}
+          {{- with .Values.resourceSimulator.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: {{ default .Values.global.image.repository .Values.resourceSimulator.image.repository }}:{{ default (include "resource-simulator.defaultTag" .) .Values.resourceSimulator.image.tag }} 
+          imagePullPolicy: {{ default .Values.global.image.imagePullPolicy .Values.resourceSimulator.image.imagePullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.resourceSimulator.containerPorts.http }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+              initialDelaySeconds: {{ .Values.resourceSimulator.livenessProbe.initialDelaySeconds }}
+              periodSeconds: {{ .Values.resourceSimulator.livenessProbe.periodSeconds }}
+              timeoutSeconds: {{ .Values.resourceSimulator.livenessProbe.timeoutSeconds }}
+              successThreshold: {{ .Values.resourceSimulator.livenessProbe.successThreshold }}
+              failureThreshold: {{ .Values.resourceSimulator.livenessProbe.failureThreshold }}
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+              initialDelaySeconds: {{ .Values.resourceSimulator.readinessProbe.initialDelaySeconds }}
+              periodSeconds: {{ .Values.resourceSimulator.readinessProbe.periodSeconds }}
+              timeoutSeconds: {{ .Values.resourceSimulator.readinessProbe.timeoutSeconds }}
+              successThreshold: {{ .Values.resourceSimulator.readinessProbe.successThreshold }}
+              failureThreshold: {{ .Values.resourceSimulator.readinessProbe.failureThreshold }}
+          resources:
+            {{- toYaml .Values.resourceSimulator.resources | nindent 12 }}
+          {{- with .Values.resourceSimulator.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 10 }}
+          {{- end }}

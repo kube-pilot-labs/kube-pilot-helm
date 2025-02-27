@@ -1,0 +1,41 @@
+# -- Provide a name in place of `resource-simulator`
+nameOverride: resource-simulator
+
+# -- String to fully override `"resource-simulator.fullname"`
+fullnameOverride: ""
+
+global:
+  image:
+    tag: "v0.0.1"
+    imagePullPolicy: Always
+
+  # -- Secrets with credentials to pull images from a private registry
+  imagePullSecrets: []
+
+resourceSimulator:
+  name: resource-simulator
+  image:
+    repository: kubepilot/resource-simulator
+    tag: "v0.0.1"
+    imagePullPolicy: Always
+  replicas: 1
+  containerPorts:
+    http: 8080
+  terminationGracePeriodSeconds: 30
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 3
+  readinessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 3
+  resources: {}
+  service:
+    type: ClusterIP
+    servicePort: 8080
+    servicePortName: http
