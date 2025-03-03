@@ -8,6 +8,7 @@ global:
   image:
     tag: "v0.0.1"
     imagePullPolicy: Always
+  deploymentAnnotations: {}
 
   # -- Secrets with credentials to pull images from a private registry
   imagePullSecrets: []
@@ -35,6 +36,7 @@ k8sPilotAgent:
     successThreshold: 1
     failureThreshold: 3
   resources: {}
+  deploymentAnnotations: {}
   service:
     type: ClusterIP
     servicePort: 8080
@@ -67,6 +69,7 @@ server:
     successThreshold: 1
     failureThreshold: 3
   resources: {}
+  deploymentAnnotations: {}
   service:
     type: ClusterIP
     servicePort: 8080
