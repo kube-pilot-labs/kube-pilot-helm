@@ -50,7 +50,7 @@ server:
   name: server
   image:
     repository: kubepilot/server
-    tag: "v0.0.1"
+    tag: "v0.0.2"
     imagePullPolicy: Always
   replicas: 1
   containerPorts:
