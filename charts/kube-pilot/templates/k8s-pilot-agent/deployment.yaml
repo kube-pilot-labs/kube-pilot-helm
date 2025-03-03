@@ -18,6 +18,12 @@ spec:
       {{- include "kube-pilot.selectorLabels" (dict "context" . "name" .Values.k8sPilotAgent.name) | nindent 6 }}
   template:
     metadata:
+      {{- with (mergeOverwrite (deepCopy .Values.global.podAnnotations) .Values.k8sPilotAgent.podAnnotations) }}
+      annotations:
+        {{- range $key, $value := . }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+      {{- end }}
       labels:
         {{- include "kube-pilot.labels" (dict "context" . "name" .Values.k8sPilotAgent.name) | nindent 8 }}
     spec:

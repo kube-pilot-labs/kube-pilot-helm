@@ -9,6 +9,7 @@ global:
     tag: "v0.0.1"
     imagePullPolicy: Always
   deploymentAnnotations: {}
+  podAnnotations: {}
 
   # -- Secrets with credentials to pull images from a private registry
   imagePullSecrets: []
@@ -37,6 +38,7 @@ k8sPilotAgent:
     failureThreshold: 3
   resources: {}
   deploymentAnnotations: {}
+  podAnnotations: {}
   service:
     type: ClusterIP
     servicePort: 8080
@@ -70,6 +72,7 @@ server:
     failureThreshold: 3
   resources: {}
   deploymentAnnotations: {}
+  podAnnotations: {}
   service:
     type: ClusterIP
     servicePort: 8080
