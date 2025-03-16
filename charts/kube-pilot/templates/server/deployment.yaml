@@ -34,6 +34,7 @@ spec:
       {{- if .Values.server.terminationGracePeriodSeconds }}
       terminationGracePeriodSeconds: {{ .Values.server.terminationGracePeriodSeconds }}
       {{- end }}
+      serviceAccountName: {{ include "kube-pilot.server.serviceAccountName" . }}
       containers:
         - name: {{ .Values.server.name }}
           {{- with .Values.server.securityContext }}

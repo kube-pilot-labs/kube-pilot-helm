@@ -14,6 +14,17 @@ Create the name of the k8s-pilot-agent service account to use
 {{- end -}}
 {{- end -}}
 
+{{/*
+Create the name of the server service account to use
+*/}}
+{{- define "kube-pilot.server.serviceAccountName" -}}
+{{- if .Values.server.serviceAccount.create -}}
+    {{ default (include "kube-pilot.server.fullname" .) .Values.server.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.server.serviceAccount.name }}
+{{- end -}}
+{{- end -}}
+
 {{- define "kube-pilot.server.fullname" -}}
 {{- printf "%s-%s" (include "kube-pilot.fullname" .) .Values.server.name | trunc 52 | trimSuffix "-" -}}
 {{- end -}}
