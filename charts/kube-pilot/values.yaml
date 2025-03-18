@@ -54,6 +54,9 @@ server:
     repository: kubepilot/server
     tag: "v0.0.2"
     imagePullPolicy: Always
+  env:
+    kafkaBroker: "kafka.confluent.svc.cluster.local:9092"
+    kafkaTopic: "k8s.deploy.create"
   replicas: 1
   containerPorts:
     http: 8080
@@ -80,4 +83,3 @@ server:
   serviceAccount:
     create: false
     name: kubepilot-server
-
