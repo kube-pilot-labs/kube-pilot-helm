@@ -82,4 +82,4 @@ server:
     servicePortName: http
   serviceAccount:
     create: false
-    name: kubepilot-server
+    name: default
