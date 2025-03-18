@@ -38,20 +38,20 @@ spec:
             httpGet:
               path: /healthz
               port: http
-              initialDelaySeconds: {{ .Values.resourceSimulator.livenessProbe.initialDelaySeconds }}
-              periodSeconds: {{ .Values.resourceSimulator.livenessProbe.periodSeconds }}
-              timeoutSeconds: {{ .Values.resourceSimulator.livenessProbe.timeoutSeconds }}
-              successThreshold: {{ .Values.resourceSimulator.livenessProbe.successThreshold }}
-              failureThreshold: {{ .Values.resourceSimulator.livenessProbe.failureThreshold }}
+            initialDelaySeconds: {{ .Values.resourceSimulator.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.resourceSimulator.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.resourceSimulator.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.resourceSimulator.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.resourceSimulator.livenessProbe.failureThreshold }}
           readinessProbe:
             httpGet:
               path: /healthz
               port: http
-              initialDelaySeconds: {{ .Values.resourceSimulator.readinessProbe.initialDelaySeconds }}
-              periodSeconds: {{ .Values.resourceSimulator.readinessProbe.periodSeconds }}
-              timeoutSeconds: {{ .Values.resourceSimulator.readinessProbe.timeoutSeconds }}
-              successThreshold: {{ .Values.resourceSimulator.readinessProbe.successThreshold }}
-              failureThreshold: {{ .Values.resourceSimulator.readinessProbe.failureThreshold }}
+            initialDelaySeconds: {{ .Values.resourceSimulator.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.resourceSimulator.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.resourceSimulator.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.resourceSimulator.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.resourceSimulator.readinessProbe.failureThreshold }}
           resources:
             {{- toYaml .Values.resourceSimulator.resources | nindent 12 }}
           {{- with .Values.resourceSimulator.containerSecurityContext }}

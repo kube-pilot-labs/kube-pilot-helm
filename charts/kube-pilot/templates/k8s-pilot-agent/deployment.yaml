@@ -52,20 +52,20 @@ spec:
             httpGet:
               path: /healthz
               port: http
-              initialDelaySeconds: {{ .Values.k8sPilotAgent.livenessProbe.initialDelaySeconds }}
-              periodSeconds: {{ .Values.k8sPilotAgent.livenessProbe.periodSeconds }}
-              timeoutSeconds: {{ .Values.k8sPilotAgent.livenessProbe.timeoutSeconds }}
-              successThreshold: {{ .Values.k8sPilotAgent.livenessProbe.successThreshold }}
-              failureThreshold: {{ .Values.k8sPilotAgent.livenessProbe.failureThreshold }}
+            initialDelaySeconds: {{ .Values.k8sPilotAgent.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.k8sPilotAgent.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.k8sPilotAgent.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.k8sPilotAgent.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.k8sPilotAgent.livenessProbe.failureThreshold }}
           readinessProbe:
             httpGet:
               path: /healthz
               port: http
-              initialDelaySeconds: {{ .Values.k8sPilotAgent.readinessProbe.initialDelaySeconds }}
-              periodSeconds: {{ .Values.k8sPilotAgent.readinessProbe.periodSeconds }}
-              timeoutSeconds: {{ .Values.k8sPilotAgent.readinessProbe.timeoutSeconds }}
-              successThreshold: {{ .Values.k8sPilotAgent.readinessProbe.successThreshold }}
-              failureThreshold: {{ .Values.k8sPilotAgent.readinessProbe.failureThreshold }}
+            initialDelaySeconds: {{ .Values.k8sPilotAgent.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.k8sPilotAgent.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.k8sPilotAgent.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.k8sPilotAgent.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.k8sPilotAgent.readinessProbe.failureThreshold }}
           resources:
             {{- toYaml .Values.k8sPilotAgent.resources | nindent 12 }}
           {{- with .Values.k8sPilotAgent.containerSecurityContext }}
