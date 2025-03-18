@@ -52,7 +52,7 @@ server:
   name: server
   image:
     repository: kubepilot/server
-    tag: "v0.0.2"
+    tag: "v0.0.3"
     imagePullPolicy: Always
   env:
     kafkaBroker: "kafka.confluent.svc.cluster.local:9092"
