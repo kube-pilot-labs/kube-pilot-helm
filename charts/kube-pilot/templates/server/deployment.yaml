@@ -47,7 +47,7 @@ spec:
             - name: KAFKA_BROKER
               value: {{ .Values.global.env.kafkaBroker }}
             - name: KAFKA_CREATE_DEPLOY_TOPIC
-              value: {{ .Values.global.env.kafkaTopic }}
+              value: {{ .Values.global.env.kafkaCreateDeployTopic }}
           ports:
             - name: http
               containerPort: {{ .Values.server.containerPorts.http }}
