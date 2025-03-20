@@ -44,6 +44,11 @@ spec:
           {{- end }}
           image: {{ default .Values.global.image.repository .Values.k8sPilotAgent.image.repository }}:{{ default (include "kube-pilot.defaultTag" .) .Values.k8sPilotAgent.image.tag }}
           imagePullPolicy: {{ default .Values.global.image.imagePullPolicy .Values.k8sPilotAgent.image.imagePullPolicy }}
+          env:
+            - name: KAFKA_BROKER
+              value: {{ .Values.global.env.kafkaBroker }}
+            - name: KAFKA_CREATE_DEPLOY_TOPIC
+              value: {{ .Values.global.env.kafkaCreateDeployTopic }}
           ports:
             - name: http
               containerPort: {{ .Values.k8sPilotAgent.containerPorts.http }}

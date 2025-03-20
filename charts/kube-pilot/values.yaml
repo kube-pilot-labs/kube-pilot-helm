@@ -10,6 +10,9 @@ global:
     imagePullPolicy: Always
   deploymentAnnotations: {}
   podAnnotations: {}
+  env:
+    kafkaBroker: "kafka.confluent.svc.cluster.local:9092"
+    kafkaCreateDeployTopic: "k8s.deploy.create"
 
   # -- Secrets with credentials to pull images from a private registry
   imagePullSecrets: []
@@ -54,9 +57,6 @@ server:
     repository: kubepilot/server
     tag: "v0.0.4"
     imagePullPolicy: Always
-  env:
-    kafkaBroker: "kafka.confluent.svc.cluster.local:9092"
-    kafkaTopic: "k8s.deploy.create"
   replicas: 1
   containerPorts:
     http: 3000

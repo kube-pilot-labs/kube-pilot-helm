@@ -45,9 +45,9 @@ spec:
           imagePullPolicy: {{ default .Values.global.image.imagePullPolicy .Values.server.image.imagePullPolicy }}
           env:
             - name: KAFKA_BROKER
-              value: {{ .Values.server.env.kafkaBroker }}
-            - name: KAFKA_TOPIC
-              value: {{ .Values.server.env.kafkaTopic }}
+              value: {{ .Values.global.env.kafkaBroker }}
+            - name: KAFKA_CREATE_DEPLOY_TOPIC
+              value: {{ .Values.global.env.kafkaTopic }}
           ports:
             - name: http
               containerPort: {{ .Values.server.containerPorts.http }}
