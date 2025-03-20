@@ -17,6 +17,8 @@ spec:
       requests:
         cpu: 100m
         memory: 256Mi
+    nodeSelector:
+      kubernetes.io/hostname: k8s-2503-worker1
     podSecurityContext:
       runAsGroup: 0
       runAsUser: 0
@@ -49,6 +51,8 @@ spec:
       requests:
         cpu: 200m
         memory: 512Mi
+    nodeSelector:
+      kubernetes.io/hostname: k8s-2503-worker2
     podSecurityContext:
       runAsGroup: 0
       runAsUser: 0
