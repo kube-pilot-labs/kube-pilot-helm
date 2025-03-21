@@ -44,7 +44,7 @@ k8sPilotAgent:
   podAnnotations: {}
   service:
     type: ClusterIP
-    servicePort: 8080
+    servicePort: 80
     servicePortName: http
   serviceAccount:
     name: k8s-pilot-agent
@@ -78,7 +78,7 @@ server:
   podAnnotations: {}
   service:
     type: ClusterIP
-    servicePort: 8080
+    servicePort: 80
     servicePortName: http
   serviceAccount:
     create: false
