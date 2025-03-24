@@ -1,0 +1,50 @@
+# Default values for kube-pilot-kafka.
+# This is a YAML-formatted file.
+
+confluent:
+  zookeeper:
+    dataVolumeCapacity: 10Gi
+    logVolumeCapacity: 10Gi
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - k8s-2503-worker1
+    podSecurityContext:
+      runAsGroup: 0
+      runAsUser: 0
+      
+  kafka:
+    dataVolumeCapacity: 10Gi
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - k8s-2503-worker2
+    podSecurityContext:
+      runAsGroup: 0
+      runAsUser: 0
+
+  persistentVolumes:
+    kafka:
+      storage: 10Gi
+      path: /data/kafka
+      reclaimPolicy: Delete
+    
+    zookeeper:
+      storage: 10Gi
+      path: /data/zookeeper
+      reclaimPolicy: Delete
+      
+    zookeeperLog:
+      storage: 10Gi
+      path: /data/zookeeper-log
+      reclaimPolicy: Delete

@@ -1,0 +1,106 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: kafka-pv
+  labels:
+    type: kafka
+spec:
+  capacity:
+    storage: {{ .Values.confluent.persistentVolumes.kafka.storage }}
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: {{ .Values.confluent.persistentVolumes.kafka.path }}
+    type: DirectoryOrCreate
+  persistentVolumeReclaimPolicy: {{ .Values.confluent.persistentVolumes.kafka.reclaimPolicy }}
+  storageClassName: ""
+  claimRef:
+    namespace: confluent
+    name: data0-kafka-0
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: txnlog-zookeeper-pv
+  labels:
+    type: zookeeper
+spec:
+  capacity:
+    storage: {{ .Values.confluent.persistentVolumes.zookeeperLog.storage }}
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: {{ .Values.confluent.persistentVolumes.zookeeperLog.path }}
+    type: DirectoryOrCreate
+  persistentVolumeReclaimPolicy: {{ .Values.confluent.persistentVolumes.zookeeperLog.reclaimPolicy }}
+  storageClassName: ""
+  claimRef:
+    namespace: confluent
+    name: txnlog-zookeeper-0
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: zookeeper-pv
+  labels:
+    type: zookeeper
+spec:
+  capacity:
+    storage: {{ .Values.confluent.persistentVolumes.zookeeper.storage }}
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: {{ .Values.confluent.persistentVolumes.zookeeper.path }}
+    type: DirectoryOrCreate
+  persistentVolumeReclaimPolicy: {{ .Values.confluent.persistentVolumes.zookeeper.reclaimPolicy }}
+  storageClassName: ""
+  claimRef:
+    namespace: confluent
+    name: data-zookeeper-0
+
+# ---
+
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: controlcenter-pv
+#   labels:
+#     type: kafka
+# spec:
+#   capacity:
+#     storage: 10Gi
+#   accessModes:
+#     - ReadWriteOnce
+#   hostPath:
+#     path: /data/controlcenter
+#     type: DirectoryOrCreate
+#   persistentVolumeReclaimPolicy: Delete
+#   storageClassName: ""
+#   claimRef:
+#     namespace: confluent
+#     name: data0-controlcenter-0
+
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: ksqldb-pv
+#   labels:
+#     type: ksqldb
+# spec:
+#   capacity:
+#     storage: 10Gi
+#   accessModes:
+#     - ReadWriteOnce
+#   hostPath:
+#     path: /data/ksqldb
+#     type: DirectoryOrCreate
+#   persistentVolumeReclaimPolicy: Delete
+#   storageClassName: ""
+#   claimRef:
+#     namespace: confluent
+#     name: data-ksqldb-0
