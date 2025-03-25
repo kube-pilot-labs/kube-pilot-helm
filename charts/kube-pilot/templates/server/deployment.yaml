@@ -54,7 +54,7 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /healthz
+              path: {{ .Values.server.livenessProbe.path | default "/ping" }}
               port: http
             initialDelaySeconds: {{ .Values.server.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.server.livenessProbe.periodSeconds }}
@@ -63,7 +63,7 @@ spec:
             failureThreshold: {{ .Values.server.livenessProbe.failureThreshold }}
           readinessProbe:
             httpGet:
-              path: /healthz
+              path: {{ .Values.server.readinessProbe.path | default "/healthz" }}
               port: http
             initialDelaySeconds: {{ .Values.server.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.server.readinessProbe.periodSeconds }}

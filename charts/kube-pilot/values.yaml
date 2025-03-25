@@ -55,19 +55,21 @@ server:
   name: server
   image:
     repository: kubepilot/server
-    tag: "v0.0.7"
+    tag: "v0.0.8"
     imagePullPolicy: Always
   replicas: 1
   containerPorts:
     http: 3000
   terminationGracePeriodSeconds: 30
   livenessProbe:
+    path: /ping
     initialDelaySeconds: 10
     periodSeconds: 10
     timeoutSeconds: 1
     successThreshold: 1
     failureThreshold: 3
   readinessProbe:
+    path: /healthz
     initialDelaySeconds: 10
     periodSeconds: 10
     timeoutSeconds: 1
