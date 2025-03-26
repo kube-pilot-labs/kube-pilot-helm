@@ -55,7 +55,7 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /healthz
+              path: {{ .Values.k8sPilotAgent.livenessProbe.path }}
               port: http
             initialDelaySeconds: {{ .Values.k8sPilotAgent.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.k8sPilotAgent.livenessProbe.periodSeconds }}
@@ -64,7 +64,7 @@ spec:
             failureThreshold: {{ .Values.k8sPilotAgent.livenessProbe.failureThreshold }}
           readinessProbe:
             httpGet:
-              path: /healthz
+              path: {{ .Values.k8sPilotAgent.readinessProbe.path }}
               port: http
             initialDelaySeconds: {{ .Values.k8sPilotAgent.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.k8sPilotAgent.readinessProbe.periodSeconds }}

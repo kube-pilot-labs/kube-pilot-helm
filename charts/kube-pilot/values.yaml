@@ -28,12 +28,14 @@ k8sPilotAgent:
     http: 8080
   terminationGracePeriodSeconds: 30
   livenessProbe:
+    path: /ping
     initialDelaySeconds: 10
     periodSeconds: 10
     timeoutSeconds: 1
     successThreshold: 1
     failureThreshold: 3
   readinessProbe:
+    path: /healthz
     initialDelaySeconds: 10
     periodSeconds: 10
     timeoutSeconds: 1
