@@ -21,7 +21,7 @@ k8sPilotAgent:
   name: k8s-pilot-agent
   image:
     repository: kubepilot/k8s-pilot-agent
-    tag: "v0.0.6"
+    tag: "v0.0.7"
     imagePullPolicy: Always
   replicas: 1
   containerPorts:
