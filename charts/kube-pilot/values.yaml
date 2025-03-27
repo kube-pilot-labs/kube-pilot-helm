@@ -13,6 +13,7 @@ global:
   env:
     kafkaBroker: "kafka.confluent.svc.cluster.local:9092"
     kafkaCreateDeployTopic: "k8s.deploy.create"
+    kafkaHealthCheckTopic: "__healthcheck"
 
   # -- Secrets with credentials to pull images from a private registry
   imagePullSecrets: []
@@ -21,7 +22,7 @@ k8sPilotAgent:
   name: k8s-pilot-agent
   image:
     repository: kubepilot/k8s-pilot-agent
-    tag: "v0.0.7"
+    tag: "v0.0.9"
     imagePullPolicy: Always
   replicas: 1
   containerPorts:

@@ -48,6 +48,8 @@ spec:
               value: {{ .Values.global.env.kafkaBroker }}
             - name: KAFKA_CREATE_DEPLOY_TOPIC
               value: {{ .Values.global.env.kafkaCreateDeployTopic }}
+            - name: KAFKA_HEALTH_CHECK_TOPIC
+              value: {{ .Values.global.env.kafkaHealthCheckTopic }}
           ports:
             - name: http
               containerPort: {{ .Values.server.containerPorts.http }}
