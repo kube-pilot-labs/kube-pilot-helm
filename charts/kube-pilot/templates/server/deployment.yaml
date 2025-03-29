@@ -51,17 +51,17 @@ spec:
             - name: KAFKA_HEALTH_CHECK_TOPIC
               value: {{ .Values.global.env.kafkaHealthCheckTopic }}
             - name: DB_HOST
-              value: {{ .Values.global.env.DB_HOST }}
+              value: {{ .Values.server.env.DB_HOST }}
             - name: DB_PORT
-              value: {{ .Values.global.env.DB_PORT }}
+              value: {{ .Values.server.env.DB_PORT }}
             - name: DB_USERNAME
-              value: {{ .Values.global.env.DB_USERNAME }}
+              value: {{ .Values.server.env.DB_USERNAME }}
             - name: DB_PASSWORD
-              value: {{ .Values.global.env.DB_PASSWORD }}
+              value: {{ .Values.server.env.DB_PASSWORD }}
             - name: DB_DATABASE
-              value: {{ .Values.global.env.DB_DATABASE }}
+              value: {{ .Values.server.env.DB_DATABASE }}
             - name: DB_SYNC
-              value: {{ .Values.global.env.DB_SYNC }}
+              value: {{ .Values.server.env.DB_SYNC }}
 
           ports:
             - name: http
