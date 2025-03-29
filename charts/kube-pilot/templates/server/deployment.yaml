@@ -45,24 +45,23 @@ spec:
           imagePullPolicy: {{ default .Values.global.image.imagePullPolicy .Values.server.image.imagePullPolicy }}
           env:
             - name: KAFKA_BROKER
-              value: {{ .Values.global.env.kafkaBroker }}
+              value: "{{ .Values.global.env.kafkaBroker }}"
             - name: KAFKA_CREATE_DEPLOY_TOPIC
-              value: {{ .Values.global.env.kafkaCreateDeployTopic }}
+              value: "{{ .Values.global.env.kafkaCreateDeployTopic }}"
             - name: KAFKA_HEALTH_CHECK_TOPIC
-              value: {{ .Values.global.env.kafkaHealthCheckTopic }}
+              value: "{{ .Values.global.env.kafkaHealthCheckTopic }}"
             - name: DB_HOST
-              value: {{ .Values.server.env.DB_HOST }}
+              value: "{{ .Values.server.env.DB_HOST }}"
             - name: DB_PORT
-              value: {{ .Values.server.env.DB_PORT }}
+              value: "{{ .Values.server.env.DB_PORT }}"
             - name: DB_USERNAME
-              value: {{ .Values.server.env.DB_USERNAME }}
+              value: "{{ .Values.server.env.DB_USERNAME }}"
             - name: DB_PASSWORD
-              value: {{ .Values.server.env.DB_PASSWORD }}
+              value: "{{ .Values.server.env.DB_PASSWORD }}"
             - name: DB_DATABASE
-              value: {{ .Values.server.env.DB_DATABASE }}
+              value: "{{ .Values.server.env.DB_DATABASE }}"
             - name: DB_SYNC
-              value: {{ .Values.server.env.DB_SYNC }}
-
+              value: "{{ .Values.server.env.DB_SYNC }}"
           ports:
             - name: http
               containerPort: {{ .Values.server.containerPorts.http }}
