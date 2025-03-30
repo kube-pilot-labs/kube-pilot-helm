@@ -58,7 +58,7 @@ server:
   name: server
   image:
     repository: kubepilot/server
-    tag: "v0.0.15"
+    tag: "v0.0.16"
     imagePullPolicy: Always
   env:
     DB_HOST: "mariadb-0.mariadb.svc.cluster.local"
