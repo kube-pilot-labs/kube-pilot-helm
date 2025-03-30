@@ -18,7 +18,10 @@ spec:
         cpu: 100m
         memory: 256Mi
     affinity: {{ toYaml .Values.confluent.zookeeper.affinity | nindent 6 }}
-    podSecurityContext: {{ toYaml .Values.confluent.zookeeper.podSecurityContext | nindent 6 }}
+    podSecurityContext:
+      fsGroup: 1000
+      runAsUser: 1000
+      runAsNonRoot: true
 ---
 apiVersion: platform.confluent.io/v1beta1
 kind: Kafka
@@ -49,7 +52,10 @@ spec:
         cpu: 200m
         memory: 512Mi
     affinity: {{ toYaml .Values.confluent.kafka.affinity | nindent 6 }}
-    podSecurityContext: {{ toYaml .Values.confluent.kafka.podSecurityContext | nindent 6 }}
+    podSecurityContext:
+      fsGroup: 1000
+      runAsUser: 1000
+      runAsNonRoot: true
   metricReporter:
     enabled: true
 # ---
